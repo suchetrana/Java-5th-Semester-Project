@@ -17,7 +17,7 @@ public class EmployeeDTO {
     private LocalDate employeeBirthDate;
 
     // Getters and Setters
-    public static int getId() {
+    public  int getId() {
         return id;
     }
 

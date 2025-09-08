@@ -6,17 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepository {
-    void saveOwner(EmployeeDTO employeeDTO);
+    void saveEmployee(EmployeeDTO employeeDTO);
 
-    Optional<EmployeeDTO> findOwner(int ownerId);
+    Optional<EmployeeDTO> findEmployee(int ownerId);
 
     void updateEmployeeDetails(int employeeId, String email);
 
     void deleteEmployee(int employeeId);
 
     List<EmployeeDTO> findAllEmployee();
-
-    Optional<EmployeeDTO> findEmployee(int id);
 
 
 }

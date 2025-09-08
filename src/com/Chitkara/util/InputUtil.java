@@ -76,7 +76,7 @@ public class InputUtil {
         }
     }
     public static String acceptEmployeeIdToUpdate(Scanner scanner) {
-        System.out.println("Enter updated name of employee:");
+        System.out.println("Enter updated email of employee:");
         return scanner.next();
     }
 

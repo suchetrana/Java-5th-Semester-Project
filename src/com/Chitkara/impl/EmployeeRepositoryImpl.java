@@ -23,17 +23,18 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         employeeDTO.setState("Himachal Pradesh");
         employeeDTO.setMobileNumber("9876543210");
         employeeDTO.setEmailId("employee1@gmail.com");
-
-        employeeDTOList.add(employeeDTO);
-    }
-    @Override
-    public void saveOwner(EmployeeDTO employeeDTO) {
+        employeeDTO.setEmployeeId(12);
         employeeDTOList.add(employeeDTO);
     }
 
     @Override
-    public Optional<EmployeeDTO> findOwner(int employeeId) {
-         return employeeDTOList.stream().filter(employee -> employee.getId() == employeeId).findFirst();
+    public void saveEmployee(EmployeeDTO employeeDTO) {
+        employeeDTOList.add(employeeDTO);
+    }
+
+    @Override
+    public Optional<EmployeeDTO> findEmployee(int employeeId) {
+        return employeeDTOList.stream().filter(employee -> employee.getId() == employeeId).findFirst();
     }
 
     @Override
@@ -49,10 +50,5 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public List<EmployeeDTO> findAllEmployee() {
         return employeeDTOList;
-    }
-
-    @Override
-    public Optional<EmployeeDTO> findEmployee(int id) {
-        return Optional.empty();
     }
 }
