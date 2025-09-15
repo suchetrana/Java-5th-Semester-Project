@@ -20,9 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void saveEmployee(EmployeeDTO employeeDTO) throws DuplicateEmployeeException {
-        Optional<EmployeeDTO> existingEmployeeDTO = employeeRepository.findEmployee(employeeDTO.getId());
+        Optional<EmployeeDTO> existingEmployeeDTO = employeeRepository.findEmployee(employeeDTO.getEmployeeId());
         if (existingEmployeeDTO.isPresent()) {
-            throw new DuplicateEmployeeException(EMPLOYEE_ALREADY_EXISTS + employeeDTO.getId());
+            throw new DuplicateEmployeeException(EMPLOYEE_ALREADY_EXISTS + employeeDTO.getEmployeeId());
         } else {
             employeeRepository.saveEmployee(employeeDTO);
         }
@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(int employeeId) throws EmployeeNotFoundException{
+    public void deleteEmployee(int employeeId) throws EmployeeNotFoundException {
         Optional<EmployeeDTO> employeeDTO = employeeRepository.findEmployee(employeeId);
         if (employeeDTO.isEmpty()) {
             throw new EmployeeNotFoundException(EMPLOYEE_NOT_FOUND + employeeId);

@@ -1,92 +1,130 @@
 package com.Chitkara.util;
 
+import com.Chitkara.dto.AdminDTO;
 import com.Chitkara.dto.EmployeeDTO;
-import com.Chitkara.enums.Gender;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class InputUtil {
-    private InputUtil() {
+    private InputUtil() {}
 
+    // Admin input methods
+    public static String acceptAdminUsername(Scanner scanner) {
+        System.out.print("Enter admin username: ");
+        return scanner.nextLine().trim();
     }
 
+    public static String acceptAdminPassword(Scanner scanner) {
+        System.out.print("Enter admin password: ");
+        return scanner.nextLine().trim();
+    }
+
+    // Employee input methods
     public static int acceptMenuOption(Scanner scanner) {
-        System.out.println("Press 1 to add new Employee.");
-        System.out.println("Press 2 to fetch Employee details.");
-        System.out.println("Press 3 to update Employee details.");
-        System.out.println("Press 4 to delete Employee details.");
-        System.out.println("Press 5 to fetch all Employee.");
-        int menuOption = scanner.nextInt();
-        if (menuOption == 1 || menuOption == 2 || menuOption == 3 || menuOption == 4 || menuOption == 5) {
-            return menuOption;
-        } else {
-            return acceptMenuOption(scanner);
+        System.out.println("\nMenu:");
+        System.out.println("1. Add Employee");
+        System.out.println("2. Find Employee");
+        System.out.println("3. Update Employee Email");
+        System.out.println("4. Delete Employee");
+        System.out.println("5. List All Employees");
+        System.out.print("Select option: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Please enter a valid option: ");
+            scanner.next();
         }
-    }
-
-    public static boolean wantToContinue(Scanner scanner) {
-        System.out.println("Press Y to continue and N to exit.");
-        char choice = scanner.next().toUpperCase().charAt(0);
-        return 'Y' == choice;
-    }
-
-    public static EmployeeDTO acceptEmployeeDetailsToSave(Scanner scanner) {
-        System.out.println("Enter id of employee:");
-        int id = scanner.nextInt();
-        System.out.println("Enter first name of employee:");
-        String firstName = scanner.next();
-        System.out.println("Enter last name of employee:");
-        String lastName = scanner.next();
-        System.out.println("Enter gender of employee:" + Arrays.asList(Gender.values()).toString());
-        String gender = scanner.next().toUpperCase();
-        System.out.println("Enter city of employee:");
-        String city = scanner.next();
-        System.out.println("Enter state of employee:");
-        String state = scanner.next();
-        System.out.println("Enter mobile number of employee:");
-        String mobileNumber = scanner.next();
-        System.out.println("Enter email id of employee:");
-        String emailId = scanner.next();
-        System.out.println("Enter id of employee:");
-        int employeeId = scanner.nextInt();
-        System.out.println("Enter birth date of employee: (dd-MM-yyyy)");
-        String employeeBirthDate = scanner.next();
-
-        try{
-            EmployeeDTO employeeDTO = new EmployeeDTO();
-
-            employeeDTO.setId(id);
-            employeeDTO.setFirstName(firstName);
-            employeeDTO.setLastName(lastName);
-            employeeDTO.setGender(Gender.valueOf(gender));
-            employeeDTO.setCity(city);
-            employeeDTO.setState(state);
-            employeeDTO.setMobileNumber(mobileNumber);
-            employeeDTO.setEmailId(emailId);
-            employeeDTO.setEmployeeId(employeeId);
-            employeeDTO.setEmployeeBirthDate(convertStringToDate(employeeBirthDate));
-
-            return employeeDTO;
-        } catch (Exception exception){
-            System.out.println("Error: "+exception.getMessage());
-            return acceptEmployeeDetailsToSave(scanner);
-        }
-    }
-    public static String acceptEmployeeIdToUpdate(Scanner scanner) {
-        System.out.println("Enter updated email of employee:");
-        return scanner.next();
-    }
-
-    public static int acceptEmployeeIdToOperate(Scanner scanner) {
-        System.out.println("Enter id of employee:");
         return scanner.nextInt();
     }
 
-    public static LocalDate convertStringToDate(String stringDate) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return LocalDate.parse(stringDate, format);
+    public static EmployeeDTO acceptEmployeeDetailsToSave(Scanner scanner) {
+        scanner.nextLine(); // consume newline
+        EmployeeDTO employee = new EmployeeDTO();
+
+        System.out.print("Enter Employee ID (primary key): ");
+        employee.setId(Integer.parseInt(scanner.nextLine().trim()));
+
+        System.out.print("Enter First Name: ");
+        employee.setFirstName(scanner.nextLine().trim());
+
+        System.out.print("Enter Last Name: ");
+        employee.setLastName(scanner.nextLine().trim());
+
+        System.out.print("Enter Gender (M/F): ");
+        employee.setGender(Enum.valueOf(com.Chitkara.enums.Gender.class, scanner.nextLine().trim().toUpperCase()));
+
+        System.out.print("Enter City: ");
+        employee.setCity(scanner.nextLine().trim());
+
+        System.out.print("Enter State: ");
+        employee.setState(scanner.nextLine().trim());
+
+        System.out.print("Enter Mobile Number: ");
+        employee.setMobileNumber(scanner.nextLine().trim());
+
+        System.out.print("Enter Email ID: ");
+        employee.setEmailId(scanner.nextLine().trim());
+
+        System.out.print("Enter Employee Unique ID: ");
+        employee.setEmployeeId(Integer.parseInt(scanner.nextLine().trim()));
+
+        System.out.print("Enter Employee Birth Date (YYYY-MM-DD): ");
+        employee.setEmployeeBirthDate(LocalDate.parse(scanner.nextLine().trim()));
+
+        System.out.print("Enter Salary: ");
+        employee.setSalary(Double.parseDouble(scanner.nextLine().trim()));
+
+        return employee;
+    }
+
+    public static int acceptEmployeeIdToOperate(Scanner scanner) {
+        System.out.print("Enter Employee Unique ID: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Please enter a valid Employee Unique ID: ");
+            scanner.next();
+        }
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        return id;
+    }
+
+    public static String acceptEmployeeEmailToUpdate(Scanner scanner) {
+        System.out.print("Enter new Email ID: ");
+        return scanner.nextLine().trim();
+    }
+
+    public static boolean wantToContinue(Scanner scanner) {
+        System.out.print("Do you want to continue? (Y/N): ");
+        String input = scanner.nextLine().trim().toUpperCase();
+        return input.equals("Y");
+    }
+    public static AdminDTO acceptAdminDetailsToCreate(Scanner scanner) {
+        scanner.nextLine(); // consume newline
+        AdminDTO admin = new AdminDTO();
+        System.out.print("Enter new admin username: ");
+        admin.setUsername(scanner.nextLine().trim());
+        System.out.print("Enter new admin password: ");
+        admin.setPassword(scanner.nextLine().trim());
+        return admin;
+    }
+
+    public static int acceptAdminIdToOperate(Scanner scanner) {
+        System.out.print("Enter Admin ID: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Please enter a valid Admin ID: ");
+            scanner.next();
+        }
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        return id;
+    }
+
+    public static String acceptAdminUsernameToUpdate(Scanner scanner) {
+        System.out.print("Enter new username: ");
+        return scanner.nextLine().trim();
+    }
+
+    public static String acceptAdminPasswordToUpdate(Scanner scanner) {
+        System.out.print("Enter new password: ");
+        return scanner.nextLine().trim();
     }
 }

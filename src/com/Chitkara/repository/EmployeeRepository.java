@@ -8,13 +8,11 @@ import java.util.Optional;
 public interface EmployeeRepository {
     void saveEmployee(EmployeeDTO employeeDTO);
 
-    Optional<EmployeeDTO> findEmployee(int ownerId);
+    Optional<EmployeeDTO> findEmployee(int employeeId);
 
     void updateEmployeeDetails(int employeeId, String email);
 
     void deleteEmployee(int employeeId);
 
     List<EmployeeDTO> findAllEmployee();
-
-
 }
