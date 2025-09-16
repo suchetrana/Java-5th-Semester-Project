@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Demo {
+public class App {
     private EmployeeService employeeService;
     private AdminService adminService;
 
     public static void main(String[] args) {
-        Demo demo = new Demo();
-        demo.run(args);
+        App app = new App();
+        app.run(args);
     }
 
     public void run(String... args) {
@@ -45,8 +45,8 @@ public class Demo {
             boolean running = true;
             while (running) {
                 System.out.println("\nMain Menu:");
-                System.out.println("1. Employee Management");
-                System.out.println("2. Admin Management");
+                System.out.println("1. Manage Employees");
+                System.out.println("2. Manage Admins");
                 System.out.println("0. Exit");
                 System.out.print("Select option: ");
                 int mainOption = scanner.nextInt();
@@ -81,6 +81,7 @@ public class Demo {
                     EmployeeDTO employeeDTO = InputUtil.acceptEmployeeDetailsToSave(scanner);
                     employeeService.saveEmployee(employeeDTO);
                     System.out.println("Employee has been created successfully.");
+                    System.out.println("Employee Unique ID (employee_id): " + employeeDTO.getEmployeeId());
                     break;
                 case 2:
                     int employeeId = InputUtil.acceptEmployeeIdToOperate(scanner);

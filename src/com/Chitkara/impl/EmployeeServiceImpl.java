@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository = null ;
     private static final String EMPLOYEE_ALREADY_EXISTS = "Employee already exists with employeeId ";
     private static final String EMPLOYEE_NOT_FOUND = "Can't find Employee with employeeId ";
 

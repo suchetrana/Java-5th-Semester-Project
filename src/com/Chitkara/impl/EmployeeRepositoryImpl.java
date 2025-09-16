@@ -18,22 +18,25 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public void saveEmployee(EmployeeDTO employeeDTO) {
-        String sql = "INSERT INTO EMPLOYEE_TABLE (id, first_name, last_name, gender, city, state, mobile_number, email_id, employee_id, employee_date_of_birth, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO EMPLOYEE_TABLE (first_name, last_name, gender, city, state, mobile_number, email_id, employee_date_of_birth, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             Class.forName(DATABASE_DRIVER);
-            ps.setInt(1, employeeDTO.getId());
-            ps.setString(2, employeeDTO.getFirstName());
-            ps.setString(3, employeeDTO.getLastName());
-            ps.setString(4, employeeDTO.getGender().toString());
-            ps.setString(5, employeeDTO.getCity());
-            ps.setString(6, employeeDTO.getState());
-            ps.setString(7, employeeDTO.getMobileNumber());
-            ps.setString(8, employeeDTO.getEmailId());
-            ps.setInt(9, employeeDTO.getEmployeeId());
-            ps.setDate(10, Date.valueOf(employeeDTO.getEmployeeBirthDate()));
-            ps.setDouble(11, employeeDTO.getSalary());
+            ps.setString(1, employeeDTO.getFirstName());
+            ps.setString(2, employeeDTO.getLastName());
+            ps.setString(3, employeeDTO.getGender().toString());
+            ps.setString(4, employeeDTO.getCity());
+            ps.setString(5, employeeDTO.getState());
+            ps.setString(6, employeeDTO.getMobileNumber());
+            ps.setString(7, employeeDTO.getEmailId());
+            ps.setDate(8, Date.valueOf(employeeDTO.getEmployeeBirthDate()));
+            ps.setDouble(9, employeeDTO.getSalary());
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                employeeDTO.setEmployeeId(rs.getInt(1));
+            }
         } catch (ClassNotFoundException | SQLException exception) {
             exception.printStackTrace();
             throw new InternalServiceException(exception.getMessage());

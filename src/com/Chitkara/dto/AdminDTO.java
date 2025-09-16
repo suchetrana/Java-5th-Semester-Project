@@ -14,9 +14,9 @@ public class AdminDTO {
 
     @Override
     public String toString() {
-        return "AdminDTO{" +
-                "adminId=" + adminId +
-                ", username='" + username + '\'' +
-                '}';
+        return  "\n{" +
+                "\nadminId: " + adminId +
+                "\n, username: '" + username + '\'' +
+                "\n}";
     }
 }

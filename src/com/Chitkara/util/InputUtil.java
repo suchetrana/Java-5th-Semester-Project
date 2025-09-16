@@ -2,6 +2,7 @@ package com.Chitkara.util;
 
 import com.Chitkara.dto.AdminDTO;
 import com.Chitkara.dto.EmployeeDTO;
+import com.Chitkara.exceptions.InvalidDetailsException;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -37,11 +38,8 @@ public class InputUtil {
     }
 
     public static EmployeeDTO acceptEmployeeDetailsToSave(Scanner scanner) {
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         EmployeeDTO employee = new EmployeeDTO();
-
-        System.out.print("Enter Employee ID (primary key): ");
-        employee.setId(Integer.parseInt(scanner.nextLine().trim()));
 
         System.out.print("Enter First Name: ");
         employee.setFirstName(scanner.nextLine().trim());
@@ -64,14 +62,15 @@ public class InputUtil {
         System.out.print("Enter Email ID: ");
         employee.setEmailId(scanner.nextLine().trim());
 
-        System.out.print("Enter Employee Unique ID: ");
-        employee.setEmployeeId(Integer.parseInt(scanner.nextLine().trim()));
-
         System.out.print("Enter Employee Birth Date (YYYY-MM-DD): ");
         employee.setEmployeeBirthDate(LocalDate.parse(scanner.nextLine().trim()));
 
         System.out.print("Enter Salary: ");
-        employee.setSalary(Double.parseDouble(scanner.nextLine().trim()));
+        double inputSalary = Double.parseDouble(scanner.nextLine().trim());
+        if (inputSalary < 0) {
+            throw new InvalidDetailsException("Salary cannot be negative.");
+        }
+        employee.setSalary(inputSalary);
 
         return employee;
     }
@@ -83,7 +82,7 @@ public class InputUtil {
             scanner.next();
         }
         int id = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         return id;
     }
 
@@ -98,7 +97,7 @@ public class InputUtil {
         return input.equals("Y");
     }
     public static AdminDTO acceptAdminDetailsToCreate(Scanner scanner) {
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         AdminDTO admin = new AdminDTO();
         System.out.print("Enter new admin username: ");
         admin.setUsername(scanner.nextLine().trim());
@@ -114,7 +113,7 @@ public class InputUtil {
             scanner.next();
         }
         int id = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         return id;
     }
 
