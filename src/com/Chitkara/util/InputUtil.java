@@ -29,6 +29,7 @@ public class InputUtil {
         System.out.println("3. Update Employee Email");
         System.out.println("4. Delete Employee");
         System.out.println("5. List All Employees");
+        System.out.println("0. Return to main menu");
         System.out.print("Select option: ");
         while (!scanner.hasNextInt()) {
             System.out.print("Please enter a valid option: ");

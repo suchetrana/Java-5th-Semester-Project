@@ -21,10 +21,10 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        app.run(args);
+        app.run();
     }
 
-    public void run(String... args) {
+    public void run() {
         try (Scanner scanner = new Scanner(System.in)) {
             adminService = new AdminServiceImpl();
 
@@ -43,6 +43,7 @@ public class App {
             employeeService = new EmployeeServiceImpl();
 
             boolean running = true;
+
             while (running) {
                 System.out.println("\nMain Menu:");
                 System.out.println("1. Manage Employees");
